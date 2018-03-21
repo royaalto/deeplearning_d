@@ -46,7 +46,7 @@ RUN pip3 --no-cache-dir install \
         pandas \
         scipy \
         sklearn \
-	&& \
+	      && \
     python3 -m ipykernel.kernelspec
 
 #Jupyter Notebook
@@ -60,11 +60,11 @@ RUN echo "c.NotebookApp.ip = '*'" \
          > /root/.jupyter/jupyter_notebook_config.py
 EXPOSE 8888
 
-# Tensorflow 1.4.1 - CPU
+# Tensorflow 1.4.1 - GPU
 #
-#RUN pip3 install --no-cache-dir --upgrade tensorflow 
-RUN pip3 --no-cache-dir install \
-    http://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-0.0.0-cp27-none-linux_x86_64.whl
+#RUN pip3 install --no-cache-dir --upgrade tensorflow
+RUN pip3 --no-cache-dir install tensorflow-gpu#the newest tensorflow need cuda 9.0
+RUN pip3 install --upgrade tensorflow-gpu==1.4
 
 # Expose port for TensorBoard
 EXPOSE 6006
@@ -101,5 +101,3 @@ RUN apt-get clean && \
 
 WORKDIR "/root"
 CMD ["/bin/bash"]
-
-
